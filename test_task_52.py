@@ -1,15 +1,13 @@
 import unittest
-import random
+import numpy as np
 
-nmbrs = []
-for i in range(10):
-    nmbrs.append(random.random())
 
-for nmb in nmbrs:
-    class TestTask52(unittest.TestCase):
-        def test_task(self):
-            self.assertGreaterEqual(nmb, 0.5)
-            return
+class TestTask52(unittest.TestCase):
+    def test_for_nmbrs(self):
+        nmbrs = np.random.random(10)
+        for nmbr in nmbrs:
+            with self.subTest(i=nmbr):
+                self.assertGreaterEqual(nmbr, 0.5)
 
 
 if __name__ == '__main__':
