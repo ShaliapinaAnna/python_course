@@ -20,14 +20,14 @@ class Corpus:
                 return 'Предложения с запрашиваемым индексом нет в корпусе'
 
     def get_word(self, n1, n2):
-        if type(n1, n2) == int:
+        if type(n1) == int and type(n2) == int:
             try:
                 return str(self._sentences[n1].get_words()[n2])
             except IndexError:
                 return 'Предложения и слова с запрашиваемымы индексами нет в корпусе'
 
     def get_grammem(self, n1, n2, n3):
-        if type(n1, n2, n3) == int:
+        if type(n1) == int and type(n2) == int and type(n3) == int:
             try:
                 return str(self._sentences[n1].get_words()[n2].get_grammems()[n3])
             except IndexError:
@@ -46,22 +46,22 @@ class Corpus:
 
 
 class Sentence:
-    def __init__(self, wordforms):
-        self._wordforms = wordforms
-        for token in wordforms.iter('token'):
+    def __init__(self, xml_sent):
+        self._words = []
+        for token in xml_sent.iter('token'):
             is_word = True
             for g in token.iter('g'):
                 if g.get('v') == 'PNCT':
                     is_word = False
             if is_word:
-                self._wordforms.append(WordForm(token))
-        self._strsent = wordforms.find('source').text
+                self._words.append(WordForm(token))
+        self._sentence_str = xml_sent.find('source').text
 
     def get_words(self):
-        return self._wordforms
+        return self._words
 
     def __str__(self):
-        return self._strsent
+        return self._sentence_str
 
 
 class WordForm:
@@ -80,8 +80,3 @@ class WordForm:
 
 corp = Corpus()
 corp.load('annot.opcorpora.no_ambig.xml')
-
-print(corp.show_info(20))
-print(corp.get_word(20, 1))
-print(corp.get_grammem(20, 1, 1))
-print(corp.get_sentence(22))
