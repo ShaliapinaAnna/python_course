@@ -6,9 +6,9 @@ class Book:
         self.__author = author
         self.__page_number = page_number
 
-    def __user_name(self):
-        self.__user_name = 'New_Name'
-        return self.__user_name
+    def user_name(self):
+        self.__user_name = 'student'
+        print(f'username: {self.__user_name}')
 
     def change_author(self, author):
         if len(self.__author) > 0:
@@ -33,6 +33,7 @@ class Book:
 
 
 book = Book('Anna', 'Cinderella', 2, 15)
+book.user_name()
 book.change_author('Charles Piero')
 book.change_chapter(4)
 book.change_page_number(36)
