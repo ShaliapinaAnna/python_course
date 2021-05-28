@@ -1,9 +1,14 @@
 class Book:
 
-    def __init__(self, author, chapter, page_number):
+    def __init__(self, user_name, author, chapter, page_number):
         self.chapter = chapter
+        self.__user_name = user_name
         self.__author = author
         self.__page_number = page_number
+
+    def __user_name(self):
+        self.__user_name = 'New_Name'
+        return self.__user_name
 
     def change_author(self, author):
         if len(self.__author) > 0:
@@ -27,7 +32,7 @@ class Book:
             print('error 404...')
 
 
-book = Book('Cinderella', 2, 15)
+book = Book('Anna', 'Cinderella', 2, 15)
 book.change_author('Charles Piero')
 book.change_chapter(4)
 book.change_page_number(36)
