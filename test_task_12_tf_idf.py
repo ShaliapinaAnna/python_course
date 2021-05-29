@@ -1,15 +1,22 @@
 import unittest
 from math import log
-from tfidf import TfIdf
+from task_12_tf_idf import tf_idf
+from collections import Counter
 
 
-class TestClass(unittest.TestCase):
+class MyTestCase(unittest.TestCase):
+
     def setUp(self) -> None:
-        self.text = TfIdf('task_12_tf_idf.json', 'annot.opcorpora.no_ambig.xml')
+        self.tf_idf = tf_idf()
 
-    def test_tfidf(self):
-        self.assertMultiLineEqual(str(self.text.get_tf_idf('больная, иностранец')),
-                                  f'[(\'иностранец\', {0}), (\'больная\', {0.5 * log(4062)})]')
+    def test_equal(self):
+        text = 'Больная не отвечала, но была взволнована до слёз.'.lower().rstrip('.,?!:;"\'»)').lstrip('.,?!:;"\'«(')
+        words = text.split(' ')
+        wordsdict = Counter(words)
+        for w in words:
+            idf_count = log(1 / wordsdict[w])
+            tf_idf_count = self.tf_idf.get_tf_idf(text)
+            self.assertNotEqual(idf_count, tf_idf_count)
 
 
 if __name__ == '__main__':
